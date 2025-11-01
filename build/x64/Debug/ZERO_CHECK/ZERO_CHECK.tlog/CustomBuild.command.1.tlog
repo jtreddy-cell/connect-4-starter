@@ -1,0 +1,10 @@
+^C:\USERS\JAYAR\ONEDRIVE\DOCUMENTS\CMPM 123\CONNECT-4-STARTER\BUILD\CMAKEFILES\A61ED0BBD84D56DA31F9BD85DAE28894\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/jayar/OneDrive/Documents/CMPM 123/connect-4-starter" "-BC:/Users/jayar/OneDrive/Documents/CMPM 123/connect-4-starter/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/jayar/OneDrive/Documents/CMPM 123/connect-4-starter/build/tictactoe.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

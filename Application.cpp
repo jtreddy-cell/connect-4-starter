@@ -3,6 +3,7 @@
 #include "classes/TicTacToe.h"
 #include "classes/Checkers.h"
 #include "classes/Othello.h"
+#include "classes/Connect4.h"
 
 namespace ClassGame {
         //
@@ -11,6 +12,8 @@ namespace ClassGame {
         Game *game = nullptr;
         bool gameOver = false;
         int gameWinner = -1;
+        // -1 means Human vs Human, otherwise 0 or 1 indicates which player is AI for Connect 4
+        int connect4AISetting = -1;
 
         //
         // game starting point
@@ -39,6 +42,10 @@ namespace ClassGame {
                     if (ImGui::Button("Reset Game")) {
                         game->stopGame();
                         game->setUpBoard();
+                        // Re-apply AI setting for Connect 4 on reset
+                        if (dynamic_cast<Connect4*>(game) != nullptr && connect4AISetting != -1) {
+                            game->setAIPlayer(connect4AISetting);
+                        }
                         gameOver = false;
                         gameWinner = -1;
                     }
@@ -55,6 +62,25 @@ namespace ClassGame {
                     if (ImGui::Button("Start Othello")) {
                         game = new Othello();
                         game->setUpBoard();
+                    }
+                    if (ImGui::Button("Start Connect 4 (Human vs Human)")) {
+                        game = new Connect4();
+                        // No AI set; default is human vs human
+                        game->setUpBoard();
+                        connect4AISetting = -1;
+                    }
+                    if (ImGui::Button("Start Connect 4 (AI as Player 1)")) {
+                        game = new Connect4();
+                        game->setUpBoard();
+                        // Override to make AI be player 0
+                        game->setAIPlayer(0);
+                        connect4AISetting = 0;
+                    }
+                    if (ImGui::Button("Start Connect 4 (AI as Player 2)")) {
+                        game = new Connect4();
+                        game->setUpBoard();
+                        game->setAIPlayer(1);
+                        connect4AISetting = 1;
                     }
                 } else {
                     ImGui::Text("Current Player Number: %d", game->getCurrentPlayer()->playerNumber());
